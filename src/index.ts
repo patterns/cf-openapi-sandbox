@@ -26,7 +26,7 @@ openapi.get("/api/users/:id", UserFetch);
 openapi.post("/secure/login", LoginPost);
 
 // You may also register routes for non OpenAPI directly on Hono
-app.get('/test', (c) => c.text('placeholder-for-non-api'))
+////app.get('/test', (c) => c.text('placeholder-for-non-api'))
 
 // Export the Hono app
 export default app;
