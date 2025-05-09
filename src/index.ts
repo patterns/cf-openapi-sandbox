@@ -3,7 +3,7 @@ import { Hono } from "hono";
 
 import { SiteList, SiteFetch, SiteCreate } from "./endpoints/sites";
 import { UserList, UserFetch, UserCreate } from "./endpoints/users";
-import { LoginPost } from "./endpoints/loginPost";
+////import { LoginPost } from "./endpoints/loginPost";
 
 
 
@@ -23,10 +23,10 @@ openapi.get("/api/users", UserList);
 openapi.post("/api/users", UserCreate);
 openapi.get("/api/users/:id", UserFetch);
 
-openapi.post("/secure/login", LoginPost);
+////openapi.post("/secure/login", LoginPost);
 
 // You may also register routes for non OpenAPI directly on Hono
-////app.get('/test', (c) => c.text('placeholder-for-non-api'))
+app.get('/secure/login', (c) => c.json({ data: 'success' }))
 
 // Export the Hono app
 export default app;
