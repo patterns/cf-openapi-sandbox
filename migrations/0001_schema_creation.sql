@@ -76,3 +76,23 @@ CREATE TABLE IF NOT EXISTS sites (
     boundary AS (json_extract(rawdata, '$.boundary')) STORED,
     "name" AS (json_extract(rawdata, '$.name')) STORED
 );
+
+DROP TABLE IF EXISTS registration;
+CREATE TABLE IF NOT EXISTS registration (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    rawdata TEXT NOT NULL,
+    created TEXT DEFAULT CURRENT_TIMESTAMP,
+    public_key AS (json_extract(rawdata, '$.publicKey')) STORED,
+    message AS (json_extract(rawdata, '$.message')) STORED,
+    sig_message AS (json_extract(rawdata, '$.sigMessage')) STORED
+);
+
+DROP TABLE IF EXISTS datareport;
+CREATE TABLE IF NOT EXISTS datareport (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    rawdata TEXT NOT NULL,
+    created TEXT DEFAULT CURRENT_TIMESTAMP,
+    h_pkr AS (json_extract(rawdata, '$.h_pkr')) STORED,
+    sigma_m AS (json_extract(rawdata, '$.sigma_m')) STORED,
+    "m" AS (json_extract(rawdata, '$.M')) STORED
+);
