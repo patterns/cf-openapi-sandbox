@@ -26,14 +26,17 @@ const loggingMiddleware = async (c, next) => {
     const status = c.res.status;
     console.log(`${method} ${url} - ${status} - ${duration}ms`);
 };
-const corsOptions = {
-    origin: c.env.CORS_ORIGIN,
-    allowHeaders: ['Content-Type'],
-    maxAge: 86400,
-    credentials: true,
-};
+
 app.use(loggingMiddleware);
-app.use('*', cors(corsOptions));
+app.use('*', (c, next) => {
+    const corsMiddlewareHandler = cors({
+        origin: c.env.CORS_ORIGIN,
+        allowHeaders: ['Content-Type'],
+        maxAge: 86400,
+        credentials: true,
+    })
+    return corsMiddlewareHandler(c, next)
+});
 
 // Setup OpenAPI registry
 const openapi = fromHono(app, {
