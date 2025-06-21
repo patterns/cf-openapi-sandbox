@@ -1,0 +1,28 @@
+@startuml SitesRetrieval
+
+title "Sites (read)"
+
+skinparam monochrome true
+start
+-> GET /api/sites;
+
+:File Exist Check "sites.json";
+if (exist?) then (yes)
+  :Read file "sites.json";
+else (no)
+  :Create "sites.json" from copying "sites-default.json";
+  :Read file "sites-default.json";
+endif
+
+if (success?) then (ok)
+  :Convert bytes to text/string;
+  :Parse into JSON obj;
+else (no)
+  :Error 500;
+endif
+
+:Write Response;
+-> Close Stream;
+stop
+@enduml
+

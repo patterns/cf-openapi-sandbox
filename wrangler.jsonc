@@ -27,7 +27,7 @@
 	 * Environment Variables
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 	 */
-	// "vars": { "MY_VARIABLE": "production_value" },
+	 "vars": { "CORS_ORIGIN": ["http://localhost", "http://localhost:3000", "http://localhost:3002", "https://patterns.github.io"] },
 	/**
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/

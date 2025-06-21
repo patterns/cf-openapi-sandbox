@@ -1,0 +1,36 @@
+@startuml SitesPersistence
+
+title "Sites (write)"
+
+skinparam monochrome true
+start
+-> POST /secure/edit_sites;
+:Ensure Login middleware;
+if (hasLoginSession?) then (yes)
+  :Access Body Property "sites";
+  if (valid?) then (ok)
+    :Parse into JSON obj;
+    if (valid?) then (ok)
+      :Marshal JSON to text/string;
+      :Write file "sites.json";
+      if (success?) then (ok)
+        :Status 201;
+      else (no)
+        :Error 500;
+      endif
+
+    else (no)
+      :Error 400;
+    endif
+  else (no)
+    :Error 400;
+  endif
+
+else (no)
+  :Error 400;
+endif
+:Write Response;
+-> Close Stream;
+stop
+@enduml
+

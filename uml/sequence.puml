@@ -1,0 +1,34 @@
+@startuml Admin Edit Sites
+hide footbox
+
+participant User
+participant "Vis" as FE  << (W,#ADD1B2) Web >> order 1
+participant "Backend" as BE  << (B,#FFB700) API >> order 2
+participant "Filesystem" as FS  << (F,#FFB700) Disc >> order 3
+participant LDAP #white
+
+User -> FE : Nav to admin portal
+FE --> LDAP
+FE -> BE : POST /secure/get-users
+BE --> FE : List pending and registered
+User -> FE : Nav to edit sites
+FE -> BE : GET /api/sites (src/routes/query.ts)
+
+alt "File exists (sites.json)"
+else "Yes"
+
+    BE -> FS: Read models/sites.json
+
+else "No"
+
+    BE -[#red]> FS: Copy sites-default.json to models/sites.json 
+    BE -[#red]> FS: Read models/sites-default.json
+
+end
+
+FS --> BE
+BE --> FE : List sites
+User -> FE : Edit JSON and submit
+FE -> BE : POST /secure/edit_sites (src/routes/edit-sites.ts)
+
+@enduml

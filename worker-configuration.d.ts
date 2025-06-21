@@ -4,8 +4,9 @@
 
 
 declare namespace Cloudflare {
-        interface Env {
-                DB: D1Database;
-        }
+    interface Env {
+        CORS_ORIGIN: ["http://localhost","http://localhost:3000","http://localhost:3002","https://patterns.github.io"];
+        DB: D1Database;
+    }
 }
 interface Env extends Cloudflare.Env {}
