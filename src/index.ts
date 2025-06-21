@@ -27,7 +27,7 @@ const loggingMiddleware = async (c, next) => {
     console.log(`${method} ${url} - ${status} - ${duration}ms`);
 };
 const corsOptions = {
-    origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:3002' ],
+    origin: c.env.CORS_ORIGIN,
     allowHeaders: ['Content-Type'],
     maxAge: 86400,
     credentials: true,
