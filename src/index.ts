@@ -5,7 +5,7 @@ import { CatchallList, CatchallCreate } from './endpoints/catchall';
 import { RegisterCreate, PendingRegisteredMash } from './endpoints/registration';
 import { RangeList } from './endpoints/ranges';
 import { SessionCreate } from './endpoints/sessions';
-import { SiteList, SiteFetch, SiteCreate } from "./endpoints/sites";
+import { SiteList, SiteFetch, SiteCreate, SiteUpdate } from "./endpoints/sites";
 
 /****import { UserList, UserFetch, UserCreate } from "./endpoints/users";
 import { UserRegister } from "./endpoints/registration";
@@ -46,6 +46,7 @@ const openapi = fromHono(app, {
 openapi.get("/api/sites", SiteList);
 openapi.post("/api/sites", SiteCreate);
 openapi.get("/api/sites/:id", SiteFetch);
+openapi.patch("/api/sites", SiteUpdate);
 /****
 openapi.get("/api/users", UserList);
 openapi.post("/api/users", UserCreate);
