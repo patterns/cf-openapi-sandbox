@@ -3,12 +3,11 @@ import { cors } from 'hono/cors';
 import { fromHono } from "chanfana";
 import { CatchallList, CatchallCreate } from './endpoints/catchall';
 import { RegisterCreate, PendingRegisteredMash } from './endpoints/registration';
-import { SiteList } from './endpoints/sites';
 import { RangeList } from './endpoints/ranges';
 import { SessionCreate } from './endpoints/sessions';
+import { SiteList, SiteFetch, SiteCreate } from "./endpoints/sites";
 
-/****import { SiteList, SiteFetch, SiteCreate } from "./endpoints/sites";
-import { UserList, UserFetch, UserCreate } from "./endpoints/users";
+/****import { UserList, UserFetch, UserCreate } from "./endpoints/users";
 import { UserRegister } from "./endpoints/registration";
 import { SignalCreate } from "./endpoints/signals";
 ****/
@@ -43,10 +42,11 @@ const openapi = fromHono(app, {
     docs_url: "/",
 });
 
-/****
+
 openapi.get("/api/sites", SiteList);
 openapi.post("/api/sites", SiteCreate);
 openapi.get("/api/sites/:id", SiteFetch);
+/****
 openapi.get("/api/users", UserList);
 openapi.post("/api/users", UserCreate);
 openapi.get("/api/users/:id", UserFetch);
@@ -60,7 +60,7 @@ openapi.get('/api/lineSummary', CatchallList);
 openapi.get('/api/logout', CatchallList);
 openapi.get('/api/markers', CatchallList);
 openapi.get('/api/dataRange', RangeList);
-openapi.get('/api/sites', SiteList);
+
 openapi.post('/api/register', RegisterCreate);
 openapi.post('/api/report_signal', CatchallCreate);
 openapi.post('/api/report_measurement', CatchallCreate);
