@@ -1,5 +1,5 @@
 
-import { D1CreateEndpoint, D1ReadEndpoint, D1ListEndpoint } from "chanfana";
+import { D1CreateEndpoint, D1UpdateEndpoint, D1ReadEndpoint, D1ListEndpoint } from "chanfana";
 import { z } from "zod";
 
 
