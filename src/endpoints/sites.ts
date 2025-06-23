@@ -79,28 +79,35 @@ export class SiteUpdate extends D1UpdateEndpoint {
 
     async getObject(filters: any) {
         const siteId = filters.filters[0].value;
-        // TODO may want to construct a concatenated key to use in the patch step instead of relying on the auto-number
-
+        let serialized;
+        try {
+            serialized = JSON.stringify(filters.updatedData)
+        } catch (e: any) {
+            // capture exception when stringify encounters BigInt/circular
+            serialized = JSON.stringify(e, Object.getOwnPropertyNames(e))
+        }
+        // call json_patch to merge the json that will be saved in the next step
+        // also pass the row key on to the next step which we use instead of another json-extract
         try {
           const result = await this.getDBBinding()
             .prepare(
-              `SELECT rawdata FROM ${this.meta.model.tableName} WHERE (?) = json_extract(rawdata, '$.id')`,
+              `SELECT id AS pk, json_patch(rawdata, ?2) AS mergedjson FROM ${this.meta.model.tableName} WHERE ?1 = json_extract(rawdata, '$.id')`,
             )
-            .bind(siteId)
+            .bind(siteId, serialized)
             .all();
 
-          existingSite = result.results[0];
+          mergedSite = result.results[0];
         } catch (e: any) {
           throw new ApiException(e.message);
         }
-        return existingSite;
+        return mergedSite;
     }
-    async update(oldObj: any, filters: any) {
+    async update(mergedObj: any, filters: any) {
         let updated;
         let serialized;
-        const siteId = filters.filters[0].value;
+        const rowkey = mergedObj.pk;
         try {
-            serialized = JSON.stringify(filters.updatedData)
+            serialized = JSON.stringify(mergedObj.mergedjson)
         } catch (e: any) {
             // capture exception when stringify encounters BigInt/circular
             serialized = JSON.stringify(e, Object.getOwnPropertyNames(e))
@@ -108,12 +115,12 @@ export class SiteUpdate extends D1UpdateEndpoint {
         try {
           const result = await this.getDBBinding()
             .prepare(
-              `UPDATE ${this.meta.model.tableName} SET rawdata = json_patch(oldObj, ?1) WHERE ?2 = json_extract(rawdata, '$.id')`,
+              `UPDATE ${this.meta.model.tableName} SET rawdata = ?2 WHERE id = ?1 RETURNING *`,
             )
-            .bind(serialized, siteId)
+            .bind(rowkey,serialized)
             .all();
 
-          updated = result.success;
+          updated = result.results[0] as O<typeof this.meta>;
         } catch (e: any) {
           throw new ApiException(e.message);
         }
