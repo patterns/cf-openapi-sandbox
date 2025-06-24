@@ -117,15 +117,13 @@ export class SiteUpdate extends D1UpdateEndpoint {
             // capture exception when stringify encounters BigInt/circular
             serialized = JSON.stringify(e, Object.getOwnPropertyNames(e))
         }
-        return updatedData;
-        /****************
-        const rowkey = mergedObj.pk;
+
         try {
           const result = await this.getDBBinding()
             .prepare(
-              `UPDATE ${this.meta.model.tableName} SET rawdata = ?2 WHERE id = ?1 RETURNING *`,
+              `UPDATE ${this.meta.model.tableName} SET rawdata = ?2 WHERE id IN (SELECT BB.id FROM ${this.meta.model.tableName} AS BB WHERE ?1=json_extract(BB.rawdata, '$.id')) RETURNING *`,
             )
-            .bind(rowkey,serialized)
+            .bind(sid, serialized)
             .all();
 
           updated = result.results[0] as O<typeof this.meta>;
@@ -133,7 +131,6 @@ export class SiteUpdate extends D1UpdateEndpoint {
           throw new ApiException(e.message);
         }
         return updated;
-        * ***************/
     }
 }
 
