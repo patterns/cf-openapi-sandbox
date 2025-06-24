@@ -78,10 +78,12 @@ export class SiteUpdate extends D1UpdateEndpoint {
     dbName = "DB";
 
     async getObject(filters: any) {
-        const siteId = filters.filters[0].value;
+        const data = this.getValidatedData();
+        const jsonrequest = data.body;
+        const sid = jsonrequest.id;
         let serialized;
         try {
-            serialized = JSON.stringify(filters.updatedData)
+            serialized = JSON.stringify(jsonrequest)
         } catch (e: any) {
             // capture exception when stringify encounters BigInt/circular
             serialized = JSON.stringify(e, Object.getOwnPropertyNames(e))
@@ -93,7 +95,7 @@ export class SiteUpdate extends D1UpdateEndpoint {
             .prepare(
               `SELECT id AS pk, json_patch(rawdata, ?2) AS mergedjson FROM ${this.meta.model.tableName} WHERE ?1 = json_extract(rawdata, '$.id')`,
             )
-            .bind(siteId, serialized)
+            .bind(sid, serialized)
             .all();
 
           mergedSite = result.results[0];
