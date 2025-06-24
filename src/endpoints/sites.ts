@@ -78,7 +78,7 @@ export class SiteUpdate extends D1UpdateEndpoint {
     dbName = "DB";
 
     async getObject(filters: any) {
-
+/********************
         const updatedData = filters.updatedData;
         const sid = updatedData.id;
         let serialized;
@@ -103,21 +103,23 @@ export class SiteUpdate extends D1UpdateEndpoint {
           throw new ApiException(e.message);
         }
         return mergedSite;
+        * *******************/
     }
     async update(mergedObj: any, filters: any) {
-        ////const updatedData = filters.updatedData;
-        return mergedObj;
-        /********************
+        const updatedData = filters.updatedData;
+        const sid = updatedData.id;
+
         let updated;
-        updated = mergedObj;
         let serialized;
-        const rowkey = mergedObj.pk;
         try {
-            serialized = JSON.stringify(mergedObj.mergedjson)
+            serialized = JSON.stringify(updatedData)
         } catch (e: any) {
             // capture exception when stringify encounters BigInt/circular
             serialized = JSON.stringify(e, Object.getOwnPropertyNames(e))
         }
+        return updatedData;
+        /****************
+        const rowkey = mergedObj.pk;
         try {
           const result = await this.getDBBinding()
             .prepare(
@@ -131,7 +133,7 @@ export class SiteUpdate extends D1UpdateEndpoint {
           throw new ApiException(e.message);
         }
         return updated;
-        ***********************/
+        * ***************/
     }
 }
 
