@@ -46,7 +46,7 @@ const openapi = fromHono(app, {
 openapi.get("/api/sites", SiteList);
 openapi.post("/api/sites", SiteCreate);
 openapi.get("/api/sites/:id", SiteFetch);
-openapi.patch("/api/sites/:id", SiteUpdate);
+openapi.put("/api/sites/:id", SiteUpdate);
 /****
 openapi.get("/api/users", UserList);
 openapi.post("/api/users", UserCreate);
