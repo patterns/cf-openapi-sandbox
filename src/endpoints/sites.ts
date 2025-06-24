@@ -78,14 +78,12 @@ export class SiteUpdate extends D1UpdateEndpoint {
     dbName = "DB";
 
     async getObject(filters: any) {
-        const recordId = filters.filters[0].value;
-        const updatedData = filters.updatedData;
-        return updatedData;
-
-        /*************
         const data = this.getValidatedData();
         const jsonrequest = data.body;
+        return jsonrequest;
+        /*************
         const sid = jsonrequest.id;
+
         let serialized;
         try {
             serialized = JSON.stringify(jsonrequest)
@@ -111,9 +109,12 @@ export class SiteUpdate extends D1UpdateEndpoint {
 ******************/
     }
     async update(mergedObj: any, filters: any) {
+        const recordId = filters.filters[0].value;
+        const updatedData = filters.updatedData;
+        return updatedData;
+        /********************
         let updated;
         updated = mergedObj;
-        /********************
         let serialized;
         const rowkey = mergedObj.pk;
         try {
@@ -134,8 +135,8 @@ export class SiteUpdate extends D1UpdateEndpoint {
         } catch (e: any) {
           throw new ApiException(e.message);
         }
-        ***********************/
         return updated;
+        ***********************/
     }
 }
 
