@@ -78,10 +78,13 @@ export class SiteUpdate extends D1UpdateEndpoint {
     dbName = "DB";
 
     async getObject(filters: any) {
+        const recordId = filters.filters[0].value;
+        const updatedData = filters.updatedData;
+        return updatedData;
+
+        /*************
         const data = this.getValidatedData();
         const jsonrequest = data.body;
-        return jsonrequest;
-        /*************
         const sid = jsonrequest.id;
         let serialized;
         try {
