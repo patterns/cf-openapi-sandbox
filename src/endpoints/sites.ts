@@ -110,7 +110,7 @@ export class SiteUpdate extends D1UpdateEndpoint {
     }
     async update(mergedObj: any, filters: any) {
         const recordId = filters.filters[0].value;
-        const updatedData = filters.updatedData;
+        const updatedData = filters.updatedData as O<typeof this.meta>;
         return updatedData;
         /********************
         let updated;
