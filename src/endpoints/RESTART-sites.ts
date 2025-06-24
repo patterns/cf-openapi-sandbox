@@ -80,8 +80,6 @@ export class SiteUpdate extends D1UpdateEndpoint {
     async getObject(filters: any) {
         const data = this.getValidatedData();
         const jsonrequest = data.body;
-        return jsonrequest;
-        /*************
         const sid = jsonrequest.id;
         let serialized;
         try {
@@ -105,12 +103,9 @@ export class SiteUpdate extends D1UpdateEndpoint {
           throw new ApiException(e.message);
         }
         return mergedSite;
-******************/
     }
     async update(mergedObj: any, filters: any) {
         let updated;
-        updated = mergedObj;
-        /********************
         let serialized;
         const rowkey = mergedObj.pk;
         try {
@@ -131,7 +126,6 @@ export class SiteUpdate extends D1UpdateEndpoint {
         } catch (e: any) {
           throw new ApiException(e.message);
         }
-        ***********************/
         return updated;
     }
 }
