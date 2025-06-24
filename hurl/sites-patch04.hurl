@@ -1,4 +1,4 @@
-PATCH https://scn-api-playground.hsinih.workers.dev/api/sites/0
+PUT https://scn-api-playground.hsinih.workers.dev/api/sites/4
 {
     "id": "site-04",
     "name": "Oareao OCC Masjid",

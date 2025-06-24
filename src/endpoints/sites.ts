@@ -78,15 +78,12 @@ export class SiteUpdate extends D1UpdateEndpoint {
     dbName = "DB";
 
     async getObject(filters: any) {
-//        const data = this.getValidatedData();
-//        const jsonrequest = data.body;
-//        return jsonrequest;
-        /*************
-        const sid = jsonrequest.id;
 
+        const updatedData = filters.updatedData;
+        const sid = updatedData.id;
         let serialized;
         try {
-            serialized = JSON.stringify(jsonrequest)
+            serialized = JSON.stringify(updatedData)
         } catch (e: any) {
             // capture exception when stringify encounters BigInt/circular
             serialized = JSON.stringify(e, Object.getOwnPropertyNames(e))
@@ -106,12 +103,10 @@ export class SiteUpdate extends D1UpdateEndpoint {
           throw new ApiException(e.message);
         }
         return mergedSite;
-******************/
     }
     async update(mergedObj: any, filters: any) {
-////        const recordId = filters.filters[0].value;
-        const updatedData = filters.updatedData;
-        return updatedData;
+        ////const updatedData = filters.updatedData;
+        return mergedObj;
         /********************
         let updated;
         updated = mergedObj;
