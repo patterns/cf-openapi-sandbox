@@ -78,9 +78,9 @@ export class SiteUpdate extends D1UpdateEndpoint {
     dbName = "DB";
 
     async getObject(filters: any) {
-        const data = this.getValidatedData();
-        const jsonrequest = data.body;
-        return jsonrequest;
+//        const data = this.getValidatedData();
+//        const jsonrequest = data.body;
+//        return jsonrequest;
         /*************
         const sid = jsonrequest.id;
 
@@ -109,8 +109,8 @@ export class SiteUpdate extends D1UpdateEndpoint {
 ******************/
     }
     async update(mergedObj: any, filters: any) {
-        const recordId = filters.filters[0].value;
-        const updatedData = filters.updatedData as O<typeof this.meta>;
+////        const recordId = filters.filters[0].value;
+        const updatedData = filters.updatedData;
         return updatedData;
         /********************
         let updated;
